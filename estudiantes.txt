@@ -1,0 +1,4 @@
+2014125426,Juan,Perez,Rodriguez,PI
+2015356791,María,Castillo, Morales, IC
+6498798165,Steicy, Mora, Talavera, PI
+9293234191,Alberto, Zuñiga, Moraga, IE
