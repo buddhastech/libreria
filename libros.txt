@@ -2,3 +2,7 @@ LIB002,El alquimista,Paulo Coelho,1988
 LIB003,Harry Potter y la piedra filosofal,J.K Rowling,1998
 LIB004,Mi viejo puerto Limon, Helena Pardo,1899
 LIB005,Sapiens,Yuval Noah Harari,2011
+LIB006,Sapiens,Yuval Noah Harari,2011
+LIB007,Sapiens,Yuval Noah Harari,2011
+LIB008,En las montañas de la locura,H.P Lovecraft, 2015
+LIB009,Harry Potter y la piedra filosofal,J.K Rowling,1980

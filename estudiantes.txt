@@ -2,3 +2,5 @@
 2015356791,María,Castillo, Morales, IC
 6498798165,Steicy, Mora, Talavera, PI
 9293234191,Alberto, Zuñiga, Moraga, IE
+65498425,Nazareth,Fernandez,Pardo,IE
+65491546,Alberto,Moraga,Quesada,IE

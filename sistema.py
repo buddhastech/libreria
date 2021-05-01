@@ -1,8 +1,8 @@
 def menu():
 
     menu_opcion = input("""
-    1- Mantenimiento
-    2- Busqueda de libros
+    1- Busquedas
+    2- Mantenimiento
     3- Salir
     
     Indique una opcion: """)
@@ -19,6 +19,16 @@ def menu_secundario():
     
     Indique una opcion: """)
         
+    return menu_opcion
+
+def menu_busqueda_libros():
+    
+    menu_opcion = input("""
+    1- Con filtros
+    2- Sin filtros
+    
+    Indique una opcion: """)
+
     return menu_opcion
 
 
@@ -133,7 +143,7 @@ def incluir_libros(id_libro, titulo, autor, anio):
         posicion = archivo.tell() # posicion del puntero en el archivo
         archivo.seek(posicion)
     
-        registro = '{},{},{},{}'.format(id_libro, titulo, autor, anio)
+        registro = '\n{},{},{},{}'.format(id_libro, titulo, autor, anio)
         archivo.write(registro)
         archivo.close()
         
@@ -260,49 +270,125 @@ def busqueda_de_libro(titulo, autor, anio):
     archivo = open('libros.txt', 'r+')
     libros = archivo.readlines()
     
-    libro_encontrado = False
-    
+    libros_filtrados = []
+ 
+    for indice in range(len(libros)): # transforma cada libro en una lista
+        
+        libros[indice] = libros[indice].split(',')
+
     for libro in libros:
         
-        libro = libro.split(',')
+        libro[3] = libro[3].rstrip('\n')
         
         if titulo and autor and anio:
-        
-            if libro[1] == titulo and libro[2] == autor and int(libro[3]) <= int(anio):
-                libro_encontrado = True
-               
-        elif autor:
-                
-            if libro[2] == autor:
-                libro_encontrado = True
-                
-        elif titulo:
-                
-            if libro[1] == titulo:
-                libro_encontrado = True
-                
-        elif anio:
-   
-            if libro[3] == anio:
-                libro_encontrado = True
-        
-        if libro_encontrado:
-                
-                print(" " *12 + "-"*50)
             
-                print("""
+            if libro[1] == titulo and libro[2] == autor and int(libro[3]) >= int(anio):
+                
+                libros_filtrados.append(libro)
+              
+        
+        if titulo and autor == "" and anio == "":
+            
+            if libro[1] == titulo:
+                libros_filtrados.append(libro)
+        
+        if autor and titulo == "" and anio == "":
+            
+            if libro[2] == autor:
+                libros_filtrados.append(libro)
+    
+        if anio and titulo == "" and autor == "":
+          
+            if int(libro[3]) >= int(anio):
+                libros_filtrados.append(libro)
+    
+
+    if libros_filtrados:
+        
+        for libro_filtrado in libros_filtrados:
+               
+            print(" " *12 + "-"*50)
+            
+            print("""
             ID Libro: {}
             Titulo: {}
             Autor: {}
             Anio: {} 
-            """.format(libro[0], libro[1], libro[2], libro[3]))
+            """.format(libro_filtrado[0], libro_filtrado[1], libro_filtrado[2], libro_filtrado[3]))
 
-                print(" " *12 + "-"*50)
-                
-        else:
-            print("\n"+" " * 12 + "Libro no encontrado")
-        break
+            print(" " *12 + "-"*50)
+    else:
+       
+        print("\nNo hay libros encontrados...\n")
         
 
 
-incluir_libros("LIB006", "Sapiens", "Yuval Noah Harari", "2011")
+
+while True:
+
+    opcion_menu_1 = menu()
+    
+    if opcion_menu_1 == "1":
+        
+        opcion_menu_2 = menu_secundario()
+        
+        if opcion_menu_2 == "1":
+            
+            opcion_busqueda = menu_busqueda_libros()
+            
+            if opcion_busqueda == "1":
+                
+                titulo = input("Ingrese el titulo del libro: ")
+                autor = input("Ingrese el autor del libro: ")
+                anio = input("Ingrese el anio: ")
+                
+                busqueda_de_libro(titulo, autor, anio)
+            
+            if opcion_busqueda == "2":
+                busqueda_de_libros()
+        
+        elif opcion_menu_2 == "2":
+            
+            busqueda_de_estudiantes()
+         
+        elif opcion_menu_2 == "3":
+            
+            busqueda_de_prestamos()
+            
+    elif opcion_menu_1 == "2":
+        
+        opcion_mantenimiento = menu_secundario()
+        
+        if opcion_mantenimiento == "1":
+            
+            id_libro = input("Indique el ID del libro: ")
+            titulo = input("Indique el titulo del libro: ")
+            autor = input("Indique el autor del libro: ")
+            anio = input("Indique el anio de publicacion: ")
+            
+            incluir_libros(id_libro, titulo, autor, anio)
+            
+        elif opcion_mantenimiento == "2":
+            
+            carne = input("Indique el carne de estudiante: ")
+            nombre = input("Indique el nombre del estudiante: ")
+            apellido1 = input("Indique el primer apellido del estudiante: ")
+            apellido2 = input("Indique el segundo apellido del estudiante: ")
+            carrera = input("Indique la carrera a la que pertenece: ")
+            
+            incluir_estudiante(carne, nombre, apellido1, apellido2, carrera)
+        
+        elif opcion_mantenimiento == "3":
+            
+            busqueda_de_libros()
+            print("\n")
+            
+            id_libro = input("Indique el ID del Libro: ")
+            carne = input("Indique el carne del estudiante: ")
+            fecha_entrega = input("Indique la fecha de entrega: ")
+            
+            incluir_prestamos(id_libro, carne, fecha_entrega)
+    
+    else:
+        break
+
